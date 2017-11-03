@@ -45,6 +45,8 @@ public class EnterPictureActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
             Intent it = new Intent(context , MainActivity.class);
+            startActivity(it);
+            finish();
         }
     }
 }

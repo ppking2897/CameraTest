@@ -1,11 +1,13 @@
 package ea.cameratest.MainActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     SurfaceView mySurfaceView;
 
     private Camera camera;
+    private CountTime2 countTime2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +52,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         if (cameraPermission.checkPermission()) {
 
+            countTime2 = new CountTime2(3000 , 1000 , this);
+            countTime2.start();
 
             SurfaceHolder surfaceHolder = mySurfaceView.getHolder();
             surfaceHolder.addCallback(this);
             surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-            Log.v("ppking" ,getFilesDir()+"" );
 
             mySurfaceView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if(camera == null){
             camera = Camera.open();
             camera.setDisplayOrientation(90);
-
 
             try {
                 camera.setPreviewDisplay(surfaceHolder);
@@ -189,4 +191,37 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         return false;
     }
 
+    public void flash(View view) {
+        if (camera.getParameters().getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH)){
+            Camera.Parameters parameters = camera.getParameters();
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            camera.setParameters(parameters);
+        }else{
+            Camera.Parameters parameters = camera.getParameters();
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            camera.setParameters(parameters);
+        }
+    }
+
+
+    public class CountTime2 extends CountDownTimer {
+        private Context context;
+
+        public CountTime2(long millisInFuture, long countDownInterval , Context context) {
+            super(millisInFuture, countDownInterval);
+            this.context = context;
+        }
+
+        @Override
+        public void onTick(long l) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            Intent it = new Intent(context , EnterPictureActivity.class);
+            startActivity(it);
+            finish();
+        }
+    }
 }
