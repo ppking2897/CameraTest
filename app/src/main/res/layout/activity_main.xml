@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <SurfaceView
+        android:layout_weight="8"
+        android:id="@+id/mySurfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentTop="true"
+        />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/takePicture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="拍照"
+            android:onClick="picture"
+            />
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/mainActivityPicture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="離開"
+            android:onClick="exit"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>
